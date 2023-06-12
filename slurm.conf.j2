@@ -1,0 +1,97 @@
+{% set ClusterName = ClusterName | default('ipc') -%}
+{% set SlurmctldHost = SlurmctldHost | default('ipc-slurmctl-1') -%}
+
+## Main
+ClusterName={{ ClusterName }}
+SlurmUser=slurm
+
+SlurmctldHost={{ SlurmctldHost }}({{ SlurmctldHost }})
+SlurmctldPort=6817
+SlurmctldPidFile=/var/run/slurmctld.pid
+SlurmctldLogFile=/var/log/slurm/slurmctld.log
+SlurmctldDebug=3
+SlurmctldTimeout=120
+
+SlurmdPort=6818
+SlurmdPidFile=/var/run/slurmd.pid
+SlurmdSpoolDir=/var/spool/slurmd
+SlurmdLogFile=/var/log/slurm/slurmd.log
+SlurmdDebug=3
+SlurmdTimeout=300
+
+SlurmSchedLogFile=/var/log/slurm/slurm_scheduler.log
+SlurmSchedLogLevel=1
+
+StateSaveLocation=/var/spool/slurm/state
+TmpFS=/tmp
+
+AuthType=auth/munge
+CryptoType=crypto/munge
+
+LaunchParameters=use_interactive_step
+MailProg=/bin/false
+
+AccountingStorageHost={{ SlurmctldHost }}
+AccountingStorageType=accounting_storage/filetxt
+
+PrivateData=accounts,jobs,reservations,usage,users,nodes
+
+JobAcctGatherType=jobacct_gather/linux
+JobAcctGatherParams=NoShared,UsePss,NoOverMemoryKill
+JobAcctGatherFrequency=30
+AcctGatherNodeFreq=30 
+
+JobCompType=jobcomp/filetxt
+JobCompLoc=/var/log/slurm/jobComp.log
+
+JobSubmitPlugins=lua
+JobRequeue=0
+
+DisableRootJobs=NO
+FirstJobId=1000
+MaxJobCount=500
+MaxArraySize=3000
+KillOnBadExit=1
+KillWait=30
+PropagatePrioProcess=0
+PropagateResourceLimitsExcept=CPU,NPROC,NOFILE,AS
+CpuFreqDef=Performance
+CpuFreqGovernors=Userspace,OnDemand,Performance,Powersave,Conservative
+
+MpiDefault=pmi2
+MpiParams=ports=10001-20001
+SwitchType=switch/none
+TaskPlugin=task/cgroup,task/affinity
+ProctrackType=proctrack/cgroup
+InactiveLimit=0
+MessageTimeout=30
+MinJobAge=600
+UnkillableStepTimeout=180
+Waittime=0
+OverTimeLimit=5
+
+HealthCheckInterval=300
+HealthCheckNodeState=ANY
+HealthCheckProgram="/usr/sbin/nhc"
+ReturnToService=2
+
+SelectType=select/cons_res
+SelectTypeParameters=CR_Core_Memory
+DefMemPerCPU=1000
+SchedulerType=sched/backfill
+PriorityType=priority/multifactor
+PriorityFlags=FAIR_TREE,MAX_TRES
+PriorityCalcPeriod=5
+PriorityUsageResetPeriod=NONE
+PriorityFavorSmall=YES
+PriorityMaxAge=10-0
+PriorityWeightAge=100000
+PriorityWeightQOS=1000000
+PriorityWeightFairshare=100000
+PriorityWeightPartition=0
+PriorityWeightJobSize=10000
+
+PartitionName=pipeline Nodes=ipc-compute-[1] Default=YES MaxTime=UNLIMITED State=UP DenyQOS=interactive 
+
+NodeName=ipc-compute-1 Sockets=1 CoresPerSocket=2 ThreadsPerCore=2 RealMemory=15897 
+

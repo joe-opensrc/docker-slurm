@@ -1,0 +1,37 @@
+name: ipc
+services:
+
+  slurmctl:
+    image: "joe-opensrc/slurm"
+    command: [ "slurmctld" ]
+    hostname: ipc-slurmctld-1
+    build: .
+    networks: 
+      slurm-net:
+        ipv4_address: 10.129.0.2
+        aliases:
+          - ipc-slurmctl-1
+
+  compute:
+    image: "joe-opensrc/slurm"
+    command: [ "slurmd" ]
+    hostname: ipc-compute-1
+    privileged: true
+    build: .
+    environment: 
+      - SLURM_SLURMCTLDHOST=ipc-slurmctl-1
+    networks: 
+      slurm-net:
+        ipv4_address: 10.129.0.3
+        aliases:
+          - ipc-compute-1
+
+networks:
+  slurm-net:
+    name: "slurm-net"
+    driver_opts: 
+      com.docker.network.bridge.name: "slurm-net"
+    ipam:
+      driver: default
+      config:
+        - subnet: "10.129.0.0/28"
