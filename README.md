@@ -19,7 +19,7 @@ The docker-compose.yml will setup a 1-node compute cluster.
 The slurmd containers must run as `--privileged`
 
 
-### Manual Setup:
+#### Manual Setup:
 
 ```
 
