@@ -22,7 +22,7 @@ The slurmd containers must run as `--privileged`
 #### Manual Setup:
 
 ```
-
+git clone https://github.com/joe-opensrc/docker-slurm.git
 cd docker-slurm
 
 docker build -t joe-opensrc/slurm .
