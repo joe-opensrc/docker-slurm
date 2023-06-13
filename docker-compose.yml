@@ -2,7 +2,7 @@ name: ipc
 services:
 
   slurmctl:
-    image: "joe-opensrc/slurm"
+    image: ${DOCKER_IMAGE:-joe-opensrc/slurm}
     command: [ "slurmctld" ]
     hostname: ipc-slurmctld-1
     build: .
@@ -19,7 +19,7 @@ services:
           - ipc-slurmctl-1
 
   compute:
-    image: "joe-opensrc/slurm"
+    image: ${DOCKER_IMAGE:-joe-opensrc/slurm}
     command: [ "slurmd" ]
     hostname: ipc-compute-1
     privileged: true
