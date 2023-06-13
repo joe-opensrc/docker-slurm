@@ -26,6 +26,8 @@ COPY slurm-entrypoint.sh /opt/
 # RUN apt-get install -y --no-install-recommends slurmdbd
 # USER slurm
 
+EXPOSE 6817/tcp 6818/tcp
+
 WORKDIR /etc/slurm-llnl
 ENTRYPOINT ["/opt/slurm-entrypoint.sh"]
 CMD ["slurmctld"]
