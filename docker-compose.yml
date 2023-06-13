@@ -12,7 +12,7 @@ services:
         published: "6817"
         protocol: tcp
         mode: host
-    networks: 
+    networks:
       slurm-net:
         ipv4_address: 10.129.0.2
         aliases:
@@ -24,7 +24,7 @@ services:
     hostname: ipc-compute-1
     privileged: true
     build: .
-    environment: 
+    environment:
       - SLURM_SLURMCTLDHOST=ipc-slurmctl-1
     ports:
       - target: 6818
@@ -32,6 +32,9 @@ services:
         published: "6818"
         protocol: tcp
         mode: host
+    # deploy:
+    #   mode: replicated
+    #   replicas: 2
     networks: 
       slurm-net:
         ipv4_address: 10.129.0.3
