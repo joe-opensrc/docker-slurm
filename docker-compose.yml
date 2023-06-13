@@ -6,6 +6,12 @@ services:
     command: [ "slurmctld" ]
     hostname: ipc-slurmctld-1
     build: .
+    ports:
+      - target: 6817
+        host_ip: 0.0.0.0
+        published: "6817"
+        protocol: tcp
+        mode: host
     networks: 
       slurm-net:
         ipv4_address: 10.129.0.2
@@ -20,6 +26,12 @@ services:
     build: .
     environment: 
       - SLURM_SLURMCTLDHOST=ipc-slurmctl-1
+    ports:
+      - target: 6818
+        host_ip: 0.0.0.0
+        published: "6818"
+        protocol: tcp
+        mode: host
     networks: 
       slurm-net:
         ipv4_address: 10.129.0.3
